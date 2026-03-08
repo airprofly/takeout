@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn test -Dspring.profiles.active=dev)",
+      "Bash(mvn clean compile -pl server -am)",
+      "Bash(mvn test -Dspring.profiles.active=dev -pl server -am)",
+      "Bash(mvn clean test -Dspring.profiles.active=dev -pl server -am)"
+    ]
+  }
+}

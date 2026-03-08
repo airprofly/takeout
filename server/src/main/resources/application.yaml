@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev # 默认激活开发环境配置 application-dev.yaml
+    include: env # 包含环境通用配置
+  # 数据源通用配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    # Druid 连接池配置
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      # 数据库连接如果长时间不用，可能会被数据库服务器单方面断开,连接验证配置,确保连接有效性
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 开启 Druid 监控统计
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: false
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+        
+mybatis:
+  # Mapper XML 文件位置
+  mapper-locations: classpath:/mapper/**/*.xml
+  # entity 类别名包路径
+  type-aliases-package: com.airprofly.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    # 开启二级缓存
+    cache-enabled: false

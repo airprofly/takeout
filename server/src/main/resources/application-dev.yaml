@@ -1,0 +1,35 @@
+# 开发环境配置
+spring:
+  datasource:
+    # ! 开发环境使用 P6Spy 进行 SQL 性能监控
+    # * 注意:P6Spy 会在日志中输出完整 SQL 语句和执行时间
+    # * 数据库凭证(username/password)从 application-env.yaml 读取
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    # * 本地开发数据库连接
+    url: jdbc:p6spy:mysql://localhost:3306/takeout?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+
+# 开发环境日志配置
+logging:
+  level:
+    root: INFO
+    # p6spy SQL 日志级别
+    p6spy: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+  file:
+    # 日志文件输出路径(固定文件名,通过 rollingpolicy 实现按日期滚动)
+    name: logs/takeout-dev.log
+    # 最大日志文件大小
+    max-size: 100MB
+    # 保留的日志文件天数
+    max-history: 90
+    # 总日志文件大小上限
+    total-size-cap: 10GB
+  # 按日期和时间滚动
+  logback:
+    rollingpolicy:
+      # 滚动日志文件名模式(支持按日期归档)
+      file-name-pattern: logs/takeout-dev.%d{yyyy-MM-dd}.%i.log
+      max-history: 90
+      total-size-cap: 10GB

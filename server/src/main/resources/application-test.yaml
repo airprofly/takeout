@@ -1,0 +1,17 @@
+# 测试环境配置
+spring:
+  datasource:
+    # ! 测试环境使用 P6Spy 进行 SQL 性能监控
+    # * 数据库凭证(username/password)从 application-env.yaml 得到
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    # * 测试环境数据库连接
+    url: jdbc:p6spy:mysql://test-db.example.com:3306/takeaways_test?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+
+# 测试环境日志配置
+logging:
+  level:
+    root: INFO
+    com.airprofly: DEBUG
+    com.p6spy: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
