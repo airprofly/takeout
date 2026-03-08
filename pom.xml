@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.1.2</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>com.airprofly</groupId>
+    <artifactId>takeaways</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <!-- 子模块 -->
+    <modules>
+        <module>common</module>
+        <module>pojo</module>
+        <module>server</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!--
+      dependencies: 在此声明所有子模块都会继承的依赖项
+
+      下载时机：
+      - 父POM加载时自动下载所有dependencies中的依赖
+      - 子模块无需重新声明，直接继承使用
+
+      适用场景：
+      - 所有子模块都必需的依赖（如：Lombok、Slf4j、JUnit等公共库）
+    -->
+    <dependencies>
+    </dependencies>
+
+    <!--
+      dependencyManagement: 在此统一管理依赖版本，不触发实际下载
+
+      下载时机：
+      - 在父POM中声明时不会下载依赖
+      - 只有当子模块实际引入该依赖时才会下载
+
+      适用场景：
+      - 需要在多个子模块中统一版本控制的依赖（如：Spring Boot、MyBatis、数据库驱动等）
+      - 子模块使用时需重新声明依赖，但无需指定版本号
+    -->
+    <dependencyManagement>
+        <dependencies>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement></pluginManagement>
+        <plugins></plugins>
+    </build>
+        
+</project>
+
+    
