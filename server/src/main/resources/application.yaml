@@ -17,10 +17,13 @@ spring:
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
       # 数据库连接如果长时间不用，可能会被数据库服务器单方面断开,连接验证配置,确保连接有效性
-      validation-query: SELECT 1 FROM DUAL
+      # MySQL 推荐使用 SELECT 1
+      validation-query: SELECT 1
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
+      # 连接有效性检测
+      validation-query-timeout: 3
       # 开启 Druid 监控统计
       stat-view-servlet:
         enabled: true

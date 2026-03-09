@@ -30,10 +30,7 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+            <!-- pojo模块不需要Spring Boot插件,否则会打包成可执行jar而不是普通jar -->
         </plugins>
     </build>
 

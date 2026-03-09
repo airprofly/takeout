@@ -11,7 +11,5 @@ spring:
 logging:
   level:
     root: INFO
-    com.airprofly: DEBUG
-    com.p6spy: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
