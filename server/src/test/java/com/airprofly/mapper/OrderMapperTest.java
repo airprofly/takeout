@@ -491,8 +491,7 @@ public class OrderMapperTest {
         @Test
         @DisplayName("根据手机号查询订单")
         void shouldReturnOrderListWhenPhoneMatches() {
-            // Given
-            Orders order = insertTestOrder(1L);
+            insertTestOrder(1L);
 
             // When
             List<Orders> orders = orderMapper.pageQuery(null, null, "13800138000", null, null, null);
@@ -506,8 +505,7 @@ public class OrderMapperTest {
         @Test
         @DisplayName("根据状态查询订单")
         void shouldReturnOrderListWhenStatusMatches() {
-            // Given
-            Orders order = insertTestOrder(1L);
+            insertTestOrder(1L);
 
             // When
             List<Orders> orders = orderMapper.pageQuery(null, null, null, Orders.TO_BE_CONFIRMED, null, null);

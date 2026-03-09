@@ -325,7 +325,7 @@ public class DishFlavorMapperTest {
         void shouldReturnFlavorsWhenDishIdExists() {
             // Given
             Long dishId = 300L;
-            List<DishFlavor> inserted = insertTestDishFlavors(dishId);
+            insertTestDishFlavors(dishId);
 
             // When
             List<DishFlavor> found = dishFlavorMapper.getByDishId(dishId);

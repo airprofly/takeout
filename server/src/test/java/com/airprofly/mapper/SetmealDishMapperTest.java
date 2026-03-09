@@ -297,7 +297,7 @@ public class SetmealDishMapperTest {
         void shouldReturnDishesWhenSetmealIdExists() {
             // Given
             Long setmealId = 200L;
-            List<SetmealDish> inserted = insertTestSetmealDishes(setmealId);
+            insertTestSetmealDishes(setmealId);
 
             // When
             List<SetmealDish> found = setmealDishMapper.getDishBySetmealId(setmealId);

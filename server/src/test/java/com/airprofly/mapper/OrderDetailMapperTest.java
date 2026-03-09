@@ -209,7 +209,7 @@ public class OrderDetailMapperTest {
         void shouldReturnCompleteOrderDetailData() {
             // Given
             Long orderId = 800003L;
-            OrderDetail inserted = insertTestOrderDetail(orderId, 1L);
+            insertTestOrderDetail(orderId, 1L);
 
             // When
             List<OrderDetail> orderDetails = orderDetailMapper.getByOrderId(orderId);
