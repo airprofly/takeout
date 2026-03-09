@@ -1,6 +1,8 @@
 package com.airprofly.mapper;
 
+import com.airprofly.annotation.AutoFill;
 import com.airprofly.entity.Setmeal;
+import com.airprofly.enumeration.OperationType;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -27,6 +29,7 @@ public interface SetmealMapper {
      * 新增套餐
      * @param setmeal 套餐对象
      */
+    @AutoFill(OperationType.INSERT)
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Setmeal setmeal);
 
@@ -58,6 +61,7 @@ public interface SetmealMapper {
      * 更新套餐
      * @param setmeal 套餐对象
      */
+    @AutoFill(OperationType.UPDATE)
     void update(Setmeal setmeal);
 
     /**

@@ -1,6 +1,8 @@
 package com.airprofly.mapper;
 
+import com.airprofly.annotation.AutoFill;
 import com.airprofly.entity.Dish;
+import com.airprofly.enumeration.OperationType;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -27,6 +29,7 @@ public interface DishMapper {
      * 新增菜品
      * @param dish 菜品对象
      */
+    @AutoFill(OperationType.INSERT)
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Dish dish);
 
@@ -64,6 +67,7 @@ public interface DishMapper {
      * 更新菜品
      * @param dish 菜品对象
      */
+    @AutoFill(OperationType.UPDATE)
     void update(Dish dish);
 
     /**
