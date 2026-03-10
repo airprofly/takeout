@@ -19,7 +19,7 @@ logging:
     file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
   file:
     # 日志文件输出路径(固定文件名,通过 rollingpolicy 实现按日期滚动)
-    name: logs/takeout-dev.log
+    name: logs/dev/takeout-dev.log
     # 最大日志文件大小
     max-size: 100MB
     # 保留的日志文件天数
@@ -30,6 +30,6 @@ logging:
   logback:
     rollingpolicy:
       # 滚动日志文件名模式(支持按日期归档)
-      file-name-pattern: logs/takeout-dev.%d{yyyy-MM-dd}.%i.log
+      file-name-pattern: logs/dev/takeout-dev.%d{yyyy-MM-dd}.%i.log
       max-history: 90
       total-size-cap: 10GB

@@ -1,0 +1,56 @@
+name: Maven Test
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+    workflow_dispatch:
+
+env:
+    DB_NAME: takeout
+    DB_PASSWORD: 123456
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        services:
+            mysql:
+                image: mysql:8.0
+                env:
+                    MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+                    MYSQL_DATABASE: ${{ env.DB_NAME }}
+                ports:
+                    - 3306:3306
+                # 健康检查配置，确保 MySQL 服务在测试开始前已准备就绪
+                options: >-
+                    --health-cmd="mysqladmin ping -h 127.0.0.1 --silent"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=5
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up JDK 17
+              uses: actions/setup-java@v4
+              with:
+                  distribution: temurin
+                  java-version: "17"
+                  cache: maven
+
+            - name: Initialize database
+              run: |
+                  mysql -h 127.0.0.1 -u root -p${{ env.DB_PASSWORD }} ${{ env.DB_NAME }} < server/src/main/resources/sql/schema.sql
+                  mysql -h 127.0.0.1 -u root -p${{ env.DB_PASSWORD }} ${{ env.DB_NAME }} < server/src/main/resources/sql/data.sql
+
+            - name: Run Maven tests
+              env:
+                SPRING_DATASOURCE_USERNAME: root
+                SPRING_DATASOURCE_PASSWORD: ${{ env.DB_PASSWORD }}
+                SPRING_ACTIVE_PROFILES: ci
+              run: mvn -B test -Dspring.profiles.active=ci

@@ -1,0 +1,26 @@
+# CI 环境配置
+# * 数据库凭证通过 CI 环境变量注入，例如 DB_HOST / DB_PORT / DB_NAME / DB_USERNAME / DB_PASSWORD
+spring:
+  datasource:
+    # ! CI 环境直接使用标准 MySQL 驱动，不引入 P6Spy 以减少噪音与开销
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:takeout}?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+
+# CI 环境日志配置
+logging:
+  level:
+    root: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+  file:
+    # CI 流水线日志产物路径
+    name: logs/ci/takeout-ci.log
+    max-size: 50MB
+    max-history: 7
+    total-size-cap: 500MB
+  logback:
+    rollingpolicy:
+      file-name-pattern: logs/ci/takeout-ci.%d{yyyy-MM-dd}.%i.log
+      max-history: 7
+      total-size-cap: 500MB
