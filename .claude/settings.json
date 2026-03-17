@@ -1,13 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Read(//home/airprofly/codeFolder/sky-take-out/**)",
-      "Read(//home/airprofly/.m2/repository/com/airprofly/common/1.0-SNAPSHOT/**)",
-      "Bash(mvn clean)",
-      "Bash(mvn clean compile)"
-    ],
-    "additionalDirectories": [
-      "/home/airprofly/.m2/repository/com/airprofly/common"
+      "Bash(mvn clean:*)"
     ]
   }
 }

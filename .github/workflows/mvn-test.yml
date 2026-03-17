@@ -12,6 +12,10 @@ on:
 env:
     DB_NAME: takeout
     DB_PASSWORD: 123456
+    DB_SCHEMA_FILE: server/src/main/resources/sql/schema.sql
+    DB_DATA_FILE: server/src/main/resources/sql/data.sql
+    SPRING_PROFILE: ci
+    
 
 jobs:
     test:
@@ -45,12 +49,11 @@ jobs:
 
             - name: Initialize database
               run: |
-                  mysql -h 127.0.0.1 -u root -p${{ env.DB_PASSWORD }} ${{ env.DB_NAME }} < server/src/main/resources/sql/schema.sql
-                  mysql -h 127.0.0.1 -u root -p${{ env.DB_PASSWORD }} ${{ env.DB_NAME }} < server/src/main/resources/sql/data.sql
+                  mysql -h 127.0.0.1 -u root -p${{ env.DB_PASSWORD }} ${{ env.DB_NAME }} < ${{ env.DB_SCHEMA_FILE }}
+                  mysql -h 127.0.0.1 -u root -p${{ env.DB_PASSWORD }} ${{ env.DB_NAME }} < ${{ env.DB_DATA_FILE }}
 
             - name: Run Maven tests
               env:
                 SPRING_DATASOURCE_USERNAME: root
                 SPRING_DATASOURCE_PASSWORD: ${{ env.DB_PASSWORD }}
-                SPRING_ACTIVE_PROFILES: ci
-              run: mvn -B test -Dspring.profiles.active=ci
+              run: mvn -B test -Dspring.profiles.active=${{ env.SPRING_PROFILE }}
