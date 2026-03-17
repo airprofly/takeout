@@ -3,6 +3,8 @@ package com.airprofly.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
+
 /**
  * 菜品分页查询 DTO
  */
@@ -10,6 +12,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class DishPageQueryDTO extends PageQueryDTO {
 
+    @Serial
     private static final long serialVersionUID = 100000004356789014L;
 
     /**
@@ -20,7 +23,7 @@ public class DishPageQueryDTO extends PageQueryDTO {
     /**
      * 分类ID
      */
-    private Integer categoryId;
+    private Long categoryId;
 
     /**
      * 状态 0表示禁用 1表示启用

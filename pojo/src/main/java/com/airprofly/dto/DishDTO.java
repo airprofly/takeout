@@ -3,6 +3,7 @@ package com.airprofly.dto;
 import com.airprofly.entity.DishFlavor;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 public class DishDTO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 100000003174526667L;
 
     /**

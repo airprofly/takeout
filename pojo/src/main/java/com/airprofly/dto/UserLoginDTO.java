@@ -2,6 +2,7 @@ package com.airprofly.dto;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @Data
 public class UserLoginDTO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 100000001189367132L;
     /**
      * 微信授权码

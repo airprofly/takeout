@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class DishOverViewVO implements Serializable {
     // 已启售数量
+    @Serial
     private static final long serialVersionUID = 100000002058776671L;
     private Integer sold;
 

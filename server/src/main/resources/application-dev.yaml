@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     # * 本地开发数据库连接
     url: jdbc:p6spy:mysql://localhost:3306/takeout?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-
+    
 # 开发环境日志配置
 logging:
   level:

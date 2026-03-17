@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
@@ -16,6 +17,7 @@ import java.io.Serializable;
 // @ApiModel(description = "员工登录返回的数据格式")
 public class EmployeeLoginVO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 100000000327721908L;
     // @ApiModelProperty("主键值")
     private Long id;

@@ -32,7 +32,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -60,7 +59,6 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.2.20</version>
         </dependency>
-        
         <!-- P6Spy SQL 性能监控 -->
         <dependency>
             <groupId>p6spy</groupId>
@@ -94,6 +92,17 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <parallel>classes</parallel>
+                    <threadCount>4</threadCount>
+                    <perCoreThreadCount>true</perCoreThreadCount>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 

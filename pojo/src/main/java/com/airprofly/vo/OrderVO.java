@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.util.List;
 
 import com.airprofly.entity.OrderDetail;
@@ -20,6 +21,7 @@ import com.airprofly.entity.Orders;
 @EqualsAndHashCode(callSuper = false) // 不使用父类属性
 public class OrderVO extends Orders {
 
+    @Serial
     private static final long serialVersionUID = 100000004656789017L;
 
     /**

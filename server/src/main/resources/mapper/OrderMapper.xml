@@ -117,6 +117,7 @@
         from order_detail od, orders o
         where od.order_id = o.id
         and o.status = 5
+        <!-- TODO: 考虑通过参数传入状态码，目前5表示已完成状态 -->
         <if test="begin != null">
             and order_time &gt;= #{begin}
         </if>

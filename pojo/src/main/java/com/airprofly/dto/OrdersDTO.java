@@ -2,6 +2,7 @@ package com.airprofly.dto;
 
 import com.airprofly.entity.OrderDetail;
 import lombok.Data;
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.util.List;
 @Data
 public class OrdersDTO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 100000002751609130L;
     private Long id;
 

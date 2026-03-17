@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ import com.airprofly.entity.DishFlavor;
 @AllArgsConstructor
 public class DishVO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 100000000554819749L;
 
     /**

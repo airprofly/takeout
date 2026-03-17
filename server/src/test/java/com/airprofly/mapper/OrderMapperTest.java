@@ -22,6 +22,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.airprofly.entity.AddressBook;
+import com.airprofly.enumeration.OrderStatus;
+import com.airprofly.enumeration.PayStatus;
 import com.airprofly.entity.Orders;
 
 /**
@@ -94,13 +96,13 @@ public class OrderMapperTest {
         Long addressBookId = createTestAddressBook(userId);
         return Orders.builder()
                 .number(generateUniqueOrderNumber())
-                .status(Orders.TO_BE_CONFIRMED)
+                .status(OrderStatus.TO_BE_CONFIRMED.getCode())
                 .userId(userId)
                 .addressBookId(addressBookId) // 使用创建的地址簿ID
                 .orderTime(LocalDateTime.now())
                 .checkoutTime(LocalDateTime.now())
                 .payMethod(1)
-                .payStatus(Orders.UN_PAID)
+                .payStatus(PayStatus.UN_PAID.getCode())
                 .amount(new BigDecimal("100.00"))
                 .remark("测试订单")
                 .userName("测试用户")
@@ -146,7 +148,7 @@ public class OrderMapperTest {
                         Orders inserted = orderMapper.getById(order.getId());
                         assertNotNull(inserted, "插入的数据应能被查询到");
                         assertEquals(order.getNumber(), inserted.getNumber(), "订单号应匹配");
-                        assertEquals(Orders.TO_BE_CONFIRMED, inserted.getStatus(), "状态应匹配");
+                        assertEquals(OrderStatus.TO_BE_CONFIRMED.getCode(), inserted.getStatus(), "状态应匹配");
                         assertEquals(new BigDecimal("100.00"), inserted.getAmount(), "金额应匹配");
                     });
         }
@@ -159,7 +161,7 @@ public class OrderMapperTest {
             Orders order = Orders.builder()
                     .userId(1L)
                     // number 为 null
-                    .status(Orders.TO_BE_CONFIRMED)
+                    .status(OrderStatus.TO_BE_CONFIRMED.getCode())
                     .build();
 
             // When & Then
@@ -325,8 +327,8 @@ public class OrderMapperTest {
             // When
             Orders updateData = Orders.builder()
                     .id(orderId)
-                    .status(Orders.CONFIRMED)
-                    .payStatus(Orders.PAID)
+                    .status(OrderStatus.CONFIRMED.getCode())
+                    .payStatus(PayStatus.PAID.getCode())
                     .remark("修改后备注")
                     .build();
             orderMapper.update(updateData);
@@ -335,8 +337,8 @@ public class OrderMapperTest {
             Orders updated = orderMapper.getById(orderId);
             assertAll("修改验证",
                     () -> assertNotNull(updated, "修改后应能查询到数据"),
-                    () -> assertEquals(Orders.CONFIRMED, updated.getStatus(), "状态应被修改"),
-                    () -> assertEquals(Orders.PAID, updated.getPayStatus(), "支付状态应被修改"));
+                    () -> assertEquals(OrderStatus.CONFIRMED.getCode(), updated.getStatus(), "状态应被修改"),
+                    () -> assertEquals(PayStatus.PAID.getCode(), updated.getPayStatus(), "支付状态应被修改"));
         }
 
         @Test
@@ -349,7 +351,7 @@ public class OrderMapperTest {
             // When
             Orders updateData = Orders.builder()
                     .id(orderId)
-                    .status(Orders.COMPLETED)
+                    .status(OrderStatus.COMPLETED.getCode())
                     .deliveryTime(LocalDateTime.now())
                     .build();
             orderMapper.update(updateData);
@@ -358,7 +360,7 @@ public class OrderMapperTest {
             Orders updated = orderMapper.getById(orderId);
             assertAll("完成订单验证",
                     () -> assertNotNull(updated, "修改后应能查询到数据"),
-                    () -> assertEquals(Orders.COMPLETED, updated.getStatus(), "状态应为已完成"),
+                    () -> assertEquals(OrderStatus.COMPLETED.getCode(), updated.getStatus(), "状态应为已完成"),
                     () -> assertNotNull(updated.getDeliveryTime(), "送达时间不应为null"));
         }
 
@@ -372,7 +374,7 @@ public class OrderMapperTest {
             // When
             Orders updateData = Orders.builder()
                     .id(orderId)
-                    .status(Orders.CANCELLED)
+                    .status(OrderStatus.CANCELLED.getCode())
                     .cancelReason("测试取消原因")
                     .cancelTime(LocalDateTime.now())
                     .build();
@@ -382,7 +384,7 @@ public class OrderMapperTest {
             Orders updated = orderMapper.getById(orderId);
             assertAll("取消订单验证",
                     () -> assertNotNull(updated, "修改后应能查询到数据"),
-                    () -> assertEquals(Orders.CANCELLED, updated.getStatus(), "状态应为已取消"),
+                    () -> assertEquals(OrderStatus.CANCELLED.getCode(), updated.getStatus(), "状态应为已取消"),
                     () -> assertEquals("测试取消原因", updated.getCancelReason(), "取消原因应匹配"),
                     () -> assertNotNull(updated.getCancelTime(), "取消时间不应为null"));
         }
@@ -394,7 +396,7 @@ public class OrderMapperTest {
             // Given
             Orders updateData = Orders.builder()
                     .id(999999L)
-                    .status(Orders.COMPLETED)
+                    .status(OrderStatus.COMPLETED.getCode())
                     .build();
 
             // When & Then
@@ -508,7 +510,7 @@ public class OrderMapperTest {
             insertTestOrder(1L);
 
             // When
-            List<Orders> orders = orderMapper.pageQuery(null, null, null, Orders.TO_BE_CONFIRMED, null, null);
+            List<Orders> orders = orderMapper.pageQuery(null, null, null, OrderStatus.TO_BE_CONFIRMED.getCode(), null, null);
 
             // Then
             assertAll("状态查询验证",
@@ -545,7 +547,7 @@ public class OrderMapperTest {
                     userId,
                     order.getNumber(),
                     "13800138000",
-                    Orders.TO_BE_CONFIRMED,
+                    OrderStatus.TO_BE_CONFIRMED.getCode(),
                     LocalDateTime.now().minusDays(1),
                     LocalDateTime.now().plusDays(1));
 
@@ -643,7 +645,7 @@ public class OrderMapperTest {
             insertTestOrder(1L);
 
             // When
-            Integer count = orderMapper.countStatus(Orders.TO_BE_CONFIRMED);
+            Integer count = orderMapper.countStatus(OrderStatus.TO_BE_CONFIRMED.getCode());
 
             // Then
             assertAll("统计验证",
@@ -709,7 +711,7 @@ public class OrderMapperTest {
 
             // When
             List<Orders> orders = orderMapper.getByStatusAndOrderTimeLT(
-                    Orders.TO_BE_CONFIRMED,
+                    OrderStatus.TO_BE_CONFIRMED.getCode(),
                     orderTimeLT);
 
             // Then
@@ -730,7 +732,7 @@ public class OrderMapperTest {
 
             // When
             List<Orders> orders = orderMapper.getByStatusAndOrderTimeLT(
-                    Orders.TO_BE_CONFIRMED,
+                    OrderStatus.TO_BE_CONFIRMED.getCode(),
                     orderTimeLT);
 
             // Then
@@ -747,7 +749,7 @@ public class OrderMapperTest {
 
             // When
             List<Orders> orders = orderMapper.getByStatusAndOrderTimeLT(
-                    Orders.TO_BE_CONFIRMED,
+                    OrderStatus.TO_BE_CONFIRMED.getCode(),
                     futureTime);
 
             // Then
@@ -813,7 +815,7 @@ public class OrderMapperTest {
         void shouldReturnTurnoverWhenTimeRangeMatches() {
             // Given
             Orders order = createTestOrder(1L);
-            order.setStatus(Orders.COMPLETED);
+            order.setStatus(OrderStatus.COMPLETED.getCode());
             orderMapper.insert(order);
 
             Map<String, Object> map = new HashMap<>();
@@ -834,11 +836,11 @@ public class OrderMapperTest {
         void shouldReturnTurnoverWhenStatusMatches() {
             // Given
             Orders order = createTestOrder(1L);
-            order.setStatus(Orders.COMPLETED);
+            order.setStatus(OrderStatus.COMPLETED.getCode());
             orderMapper.insert(order);
 
             Map<String, Object> map = new HashMap<>();
-            map.put("status", Orders.COMPLETED);
+            map.put("status", OrderStatus.COMPLETED.getCode());
 
             // When
             Double turnover = orderMapper.sumByMap(map);
@@ -854,13 +856,13 @@ public class OrderMapperTest {
         void shouldReturnTurnoverWhenMultipleConditionsMatch() {
             // Given
             Orders order = createTestOrder(1L);
-            order.setStatus(Orders.COMPLETED);
+            order.setStatus(OrderStatus.COMPLETED.getCode());
             orderMapper.insert(order);
 
             Map<String, Object> map = new HashMap<>();
             map.put("begin", LocalDateTime.now().minusDays(1));
             map.put("end", LocalDateTime.now().plusDays(1));
-            map.put("status", Orders.COMPLETED);
+            map.put("status", OrderStatus.COMPLETED.getCode());
 
             // When
             Double turnover = orderMapper.sumByMap(map);
@@ -954,11 +956,11 @@ public class OrderMapperTest {
         void shouldReturnOrderCountWhenStatusMatches() {
             // Given
             Orders order = createTestOrder(1L);
-            order.setStatus(Orders.COMPLETED);
+            order.setStatus(OrderStatus.COMPLETED.getCode());
             orderMapper.insert(order);
 
             Map<String, Object> map = new HashMap<>();
-            map.put("status", Orders.COMPLETED);
+            map.put("status", OrderStatus.COMPLETED.getCode());
 
             // When
             Integer count = orderMapper.countByMap(map);
@@ -974,13 +976,13 @@ public class OrderMapperTest {
         void shouldReturnOrderCountWhenMultipleConditionsMatch() {
             // Given
             Orders order = createTestOrder(1L);
-            order.setStatus(Orders.COMPLETED);
+            order.setStatus(OrderStatus.COMPLETED.getCode());
             orderMapper.insert(order);
 
             Map<String, Object> map = new HashMap<>();
             map.put("begin", LocalDateTime.now().minusDays(1));
             map.put("end", LocalDateTime.now().plusDays(1));
-            map.put("status", Orders.COMPLETED);
+            map.put("status", OrderStatus.COMPLETED.getCode());
 
             // When
             Integer count = orderMapper.countByMap(map);
@@ -1179,31 +1181,31 @@ public class OrderMapperTest {
             // 4. Update - 更新订单状态为已接单
             Orders updateData = Orders.builder()
                     .id(order.getId())
-                    .status(Orders.CONFIRMED)
+                    .status(OrderStatus.CONFIRMED.getCode())
                     .build();
             orderMapper.update(updateData);
             Orders updated = orderMapper.getById(order.getId());
-            assertEquals(Orders.CONFIRMED, updated.getStatus(), "状态应更新为已接单");
+            assertEquals(OrderStatus.CONFIRMED.getCode(), updated.getStatus(), "状态应更新为已接单");
 
             // 5. Update - 更新订单状态为派送中
             Orders deliveryData = Orders.builder()
                     .id(order.getId())
-                    .status(Orders.DELIVERY_IN_PROGRESS)
+                    .status(OrderStatus.DELIVERY_IN_PROGRESS.getCode())
                     .build();
             orderMapper.update(deliveryData);
             Orders delivering = orderMapper.getById(order.getId());
-            assertEquals(Orders.DELIVERY_IN_PROGRESS, delivering.getStatus(), "状态应更新为派送中");
+            assertEquals(OrderStatus.DELIVERY_IN_PROGRESS.getCode(), delivering.getStatus(), "状态应更新为派送中");
 
             // 6. Update - 完成订单
             Orders completeData = Orders.builder()
                     .id(order.getId())
-                    .status(Orders.COMPLETED)
+                    .status(OrderStatus.COMPLETED.getCode())
                     .deliveryTime(LocalDateTime.now())
                     .build();
             orderMapper.update(completeData);
             Orders completed = orderMapper.getById(order.getId());
             assertAll("完成订单验证",
-                    () -> assertEquals(Orders.COMPLETED, completed.getStatus(), "状态应为已完成"),
+                    () -> assertEquals(OrderStatus.COMPLETED.getCode(), completed.getStatus(), "状态应为已完成"),
                     () -> assertNotNull(completed.getDeliveryTime(), "送达时间不应为null"));
 
             // 7. Query - 分页查询验证
@@ -1217,13 +1219,13 @@ public class OrderMapperTest {
             // Given - 创建一个20分钟前的待接单订单(确保超过查询时间)
             Orders order = createTestOrder(1L);
             order.setOrderTime(LocalDateTime.now().minusMinutes(20));
-            order.setStatus(Orders.TO_BE_CONFIRMED);
+            order.setStatus(OrderStatus.TO_BE_CONFIRMED.getCode());
             orderMapper.insert(order);
 
             // When - 查询15分钟前的超时订单
             LocalDateTime orderTimeLT = LocalDateTime.now().minusMinutes(15);
             List<Orders> timeoutOrders = orderMapper.getByStatusAndOrderTimeLT(
-                    Orders.TO_BE_CONFIRMED,
+                    OrderStatus.TO_BE_CONFIRMED.getCode(),
                     orderTimeLT);
 
             // Then - 验证能查询到超时订单
@@ -1239,25 +1241,25 @@ public class OrderMapperTest {
             Long userId = 7777L;
 
             Orders order1 = createTestOrder(userId);
-            order1.setStatus(Orders.COMPLETED);
+            order1.setStatus(OrderStatus.COMPLETED.getCode());
             order1.setAmount(new BigDecimal("100.00"));
             orderMapper.insert(order1);
 
             Orders order2 = createTestOrder(userId);
-            order2.setStatus(Orders.COMPLETED);
+            order2.setStatus(OrderStatus.COMPLETED.getCode());
             order2.setAmount(new BigDecimal("200.00"));
             orderMapper.insert(order2);
 
             Orders order3 = createTestOrder(userId);
-            order3.setStatus(Orders.TO_BE_CONFIRMED);
+            order3.setStatus(OrderStatus.TO_BE_CONFIRMED.getCode());
             orderMapper.insert(order3);
 
             // When - 统计已完成订单数量
-            Integer completedCount = orderMapper.countStatus(Orders.COMPLETED);
+            Integer completedCount = orderMapper.countStatus(OrderStatus.COMPLETED.getCode());
 
             // When - 统计营业额
             Map<String, Object> map = new HashMap<>();
-            map.put("status", Orders.COMPLETED);
+            map.put("status", OrderStatus.COMPLETED.getCode());
             Double turnover = orderMapper.sumByMap(map);
 
             // When - 统计订单数量
@@ -1279,11 +1281,11 @@ public class OrderMapperTest {
             // Given - 创建多个测试订单
             Long userId = 6666L;
             Orders order1 = createTestOrder(userId);
-            order1.setStatus(Orders.TO_BE_CONFIRMED);
+            order1.setStatus(OrderStatus.TO_BE_CONFIRMED.getCode());
             orderMapper.insert(order1);
 
             Orders order2 = createTestOrder(userId);
-            order2.setStatus(Orders.COMPLETED);
+            order2.setStatus(OrderStatus.COMPLETED.getCode());
             orderMapper.insert(order2);
 
             // When - 查询待接单订单
@@ -1291,7 +1293,7 @@ public class OrderMapperTest {
                     userId,
                     null,
                     null,
-                    Orders.TO_BE_CONFIRMED,
+                    OrderStatus.TO_BE_CONFIRMED.getCode(),
                     null,
                     null);
 
@@ -1300,7 +1302,7 @@ public class OrderMapperTest {
                     userId,
                     null,
                     null,
-                    Orders.COMPLETED,
+                    OrderStatus.COMPLETED.getCode(),
                     null,
                     null);
 
@@ -1322,7 +1324,7 @@ public class OrderMapperTest {
             // When - 取消订单
             Orders cancelData = Orders.builder()
                     .id(orderId)
-                    .status(Orders.CANCELLED)
+                    .status(OrderStatus.CANCELLED.getCode())
                     .cancelReason("用户主动取消")
                     .cancelTime(LocalDateTime.now())
                     .build();
@@ -1332,7 +1334,7 @@ public class OrderMapperTest {
             Orders cancelled = orderMapper.getById(orderId);
             assertAll("取消订单验证",
                     () -> assertNotNull(cancelled, "取消后应能查询到订单"),
-                    () -> assertEquals(Orders.CANCELLED, cancelled.getStatus(), "状态应为已取消"),
+                    () -> assertEquals(OrderStatus.CANCELLED.getCode(), cancelled.getStatus(), "状态应为已取消"),
                     () -> assertEquals("用户主动取消", cancelled.getCancelReason(), "取消原因应匹配"),
                     () -> assertNotNull(cancelled.getCancelTime(), "取消时间不应为null"));
         }

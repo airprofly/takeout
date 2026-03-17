@@ -1,11 +1,14 @@
 package com.airprofly.entity;
 
+import com.airprofly.enumeration.OrderStatus;
+import com.airprofly.enumeration.PayStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,25 +23,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Orders implements Serializable {
 
-    /**
-     * 订单状态常量
-     * 1:待付款 2:待接单 3:已接单 4:派送中 5:已完成 6:已取消
-     */
-    public static final Integer PENDING_PAYMENT = 1;
-    public static final Integer TO_BE_CONFIRMED = 2;
-    public static final Integer CONFIRMED = 3;
-    public static final Integer DELIVERY_IN_PROGRESS = 4;
-    public static final Integer COMPLETED = 5;
-    public static final Integer CANCELLED = 6;
-
-    /**
-     * 支付状态常量
-     * 0:未支付 1:已支付 2:退款
-     */
-    public static final Integer UN_PAID = 0;
-    public static final Integer PAID = 1;
-    public static final Integer REFUND = 2;
-
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -111,4 +96,44 @@ public class Orders implements Serializable {
 
     // 餐具数量状态 1:按餐量提供 0:选择具体数量
     private Integer tablewareStatus;
+
+    /**
+     * 获取订单状态枚举
+     *
+     * @return 订单状态枚举，如果 status 为 null 则返回 null
+     */
+    public OrderStatus getStatusEnum() {
+        return status != null ? OrderStatus.fromCode(status) : null;
+    }
+
+    /**
+     * 设置订单状态（通过枚举）
+     *
+     * @param orderStatus 订单状态枚举
+     * @return 当前对象
+     */
+    public Orders setStatusEnum(OrderStatus orderStatus) {
+        this.status = orderStatus != null ? orderStatus.getCode() : null;
+        return this;
+    }
+
+    /**
+     * 获取支付状态枚举
+     *
+     * @return 支付状态枚举，如果 payStatus 为 null 则返回 null
+     */
+    public PayStatus getPayStatusEnum() {
+        return payStatus != null ? PayStatus.fromCode(payStatus) : null;
+    }
+
+    /**
+     * 设置支付状态（通过枚举）
+     *
+     * @param payStatus 支付状态枚举
+     * @return 当前对象
+     */
+    public Orders setPayStatusEnum(PayStatus payStatus) {
+        this.payStatus = payStatus != null ? payStatus.getCode() : null;
+        return this;
+    }
 }

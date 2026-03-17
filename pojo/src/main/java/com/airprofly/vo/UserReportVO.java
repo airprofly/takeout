@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class UserReportVO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 100000000564661474L;
     //日期，以逗号分隔，例如：2022-10-01,2022-10-02,2022-10-03
     private String dateList;

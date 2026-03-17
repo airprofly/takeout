@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 
 /**
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 public class OrdersPageQueryDTO extends PageQueryDTO {
 
+    @Serial
     private static final long serialVersionUID = 100000004556789016L;
 
     /**

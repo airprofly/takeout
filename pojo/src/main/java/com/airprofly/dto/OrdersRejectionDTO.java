@@ -2,11 +2,13 @@ package com.airprofly.dto;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
 public class OrdersRejectionDTO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 100000001576517222L;
     private Long id;
 

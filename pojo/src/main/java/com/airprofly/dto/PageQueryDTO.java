@@ -2,6 +2,7 @@ package com.airprofly.dto;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @Data
 public class PageQueryDTO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 100000001294868459L;
     /**
      * 页码,从1开始
