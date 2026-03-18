@@ -8,6 +8,13 @@ spring:
     # * 本地开发数据库连接
     url: jdbc:p6spy:mysql://localhost:3306/takeout?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 
+      database: 0 # 使用 0 号数据库
+
 # 开发环境日志配置
 logging:
   level:

@@ -61,6 +61,17 @@
 
     <build>
         <pluginManagement>
+            <plugins>
+                <!-- 配置 Surefire 插件：在未找到指定测试时不失败 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <!-- 当使用 -Dtest 指定测试但在当前模块找不到时，不失败 -->
+                        <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
+                    </configuration>
+                </plugin>
+            </plugins>
         </pluginManagement>
 
         <plugins>

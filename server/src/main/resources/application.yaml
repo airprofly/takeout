@@ -33,7 +33,21 @@ spring:
         enabled: true
         url-pattern: /*
         exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
-    
+
+  # spring.data 
+  data:
+    redis:
+    # 请添加 Redis 连接配置 (host/port/password/database)到 application-dev.yaml 中
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 1000 # max connection wait time
+  cache:
+    type: redis
+    redis:
+      time-to-live: 30m  # @Cacheable 注解设置的键的过期时间,30分钟  
 
 mybatis:
   # Mapper XML 文件位置
@@ -44,3 +58,5 @@ mybatis:
     map-underscore-to-camel-case: true
     # 开启二级缓存
     cache-enabled: false
+
+  

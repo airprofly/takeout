@@ -77,8 +77,6 @@ public class UserServiceTest {
         @Test
         @DisplayName("用户登录 - 已存在用户")
         void shouldReturnLoginVOWhenUserExists() {
-            // Given
-            String mockOpenid = "mock_openid_123";
             when(userMapper.getByOpenid(anyString())).thenReturn(testUser);
 
             // When

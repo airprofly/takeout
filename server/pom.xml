@@ -71,7 +71,21 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!-- cache 依赖是为了了使用 @Cacheable  @CacheEvict 等注解,不用手动直接使用注入的 RedisTemplate Bean -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <!-- TODO: 1. 在 application.yml 中配置 redis 和 cache 属性
+                 2. 在 main 类上添加 @EnableCaching 注解
+                 3. 重写 CacheConfig 类, 配置 RedisCacheManager 的序列化方法和 RedisTemplate 的序列化方法
+        -->
 
+        <!-- my own modules -->
         <dependency>
             <groupId>com.airprofly</groupId>
             <artifactId>pojo</artifactId>
@@ -95,7 +109,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.5.4</version>
                 <configuration>
                     <parallel>classes</parallel>
                     <perCoreThreadCount>true</perCoreThreadCount>
