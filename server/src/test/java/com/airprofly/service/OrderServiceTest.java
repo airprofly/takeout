@@ -34,6 +34,7 @@ import com.airprofly.enumeration.PayStatus;
 import com.airprofly.mapper.OrderDetailMapper;
 import com.airprofly.mapper.OrderMapper;
 import com.airprofly.result.PageResult;
+import com.airprofly.service.impl.OrderServiceImpl;
 import com.airprofly.vo.OrderStatisticsVO;
 import com.airprofly.vo.OrderVO;
 
@@ -65,7 +66,7 @@ public class OrderServiceTest {
     private OrderDetailMapper orderDetailMapper;
 
     @InjectMocks
-    private com.airprofly.service.impl.OrderServiceImpl orderService;
+    private OrderServiceImpl orderService;
 
     private OrdersSubmitDTO testOrdersSubmitDTO;
     private OrdersConfirmDTO testOrdersConfirmDTO;

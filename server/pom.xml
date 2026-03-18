@@ -98,7 +98,6 @@
                 <version>3.0.0-M5</version>
                 <configuration>
                     <parallel>classes</parallel>
-                    <threadCount>4</threadCount>
                     <perCoreThreadCount>true</perCoreThreadCount>
                 </configuration>
             </plugin>
